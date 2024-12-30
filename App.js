@@ -14,7 +14,7 @@ export default function App() {
   const handleSubmit = ()=>{
     changeText((inputText)=>[
       ...inputText,
-      userInput
+      {text: userInput, key: Math.random().toString()}
     ])
     changeInput('')
   }
@@ -32,13 +32,16 @@ export default function App() {
           return (
             <View style={{flex:1, justifyContent: 'center', alignItems: 'center', }}>
               <Text style={{alignContent: 'center', padding:5, backgroundColor:'pink', color:'white', borderRadius: 5, marginTop: 5, height: 100}}>
-                {eachItem.item}
+                {eachItem.item.text}
               </Text>
             </View>
           )
-        }}>
+        }}
+        keyExtractor={(item) => item.key}
+        alwaysBounceVertical={false}
+        />
 
-        </FlatList>
+
       </View>
 
     </View>
