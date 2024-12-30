@@ -1,12 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import {ScrollView, FlatList} from 'react-native';
+
 
 export default function App() {
+  const [userInput, changeInput] = useState('')
+  const [userText, changeText] = useState([])
+
+  const handleChange = (s)=>{
+    changeInput(s)
+  }
+  const handleSubmit = ()=>{
+    changeText((inputText)=>[
+      ...inputText,
+      userInput
+    ])
+    changeInput('')
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{flex: 1}}>
+      <View style={{flex: 1, marginTop: 50, display:'flex', flexDirection:'row',justifyContent: "space-around"}}>
+        <TextInput value={userInput} style={{borderWidth:2,width: 200, height: 40}}placeholder='hiihh' name='input' onChangeText={handleChange}/>
+        <View style={{ borderWidth: 2, width: 100, height: 40, borderColor: 'gray', borderRadius: 5 }}>
+            <Button title="Search" color="gray" accessibilityLabel="Learn more about this purple button" onPress={handleSubmit}/>
+        </View>
+      </View >
+
+      <View style={{flex: 16, marginTop: 20}}>
+        <FlatList data={userText} renderItem={(eachItem)=>{
+          return (
+            <View style={{flex:1, justifyContent: 'center', alignItems: 'center', }}>
+              <Text style={{alignContent: 'center', padding:5, backgroundColor:'pink', color:'white', borderRadius: 5, marginTop: 5, height: 100}}>
+                {eachItem.item}
+              </Text>
+            </View>
+          )
+        }}>
+
+        </FlatList>
+      </View>
+
     </View>
+    
   );
 }
 
